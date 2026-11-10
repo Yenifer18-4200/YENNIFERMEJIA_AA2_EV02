@@ -1,146 +1,160 @@
-VIRTUAL STORE
-Evidencia GA7-220501096-AA2-EV02
+<div align="center">
 
-Módulos de software codificados y probados
+# 🛒 Virtual Store
 
-1. Descripción del proyecto
+### Módulo web de gestión de productos con Java Servlets y JSP
 
-Virtual Store es una aplicación web desarrollada en Java que permite gestionar los productos de una tienda virtual mediante operaciones CRUD (Crear, Consultar, Actualizar y Eliminar).
+![Java](https://img.shields.io/badge/Java-17-38b6ff?style=for-the-badge&logo=openjdk&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-3.x-38b6ff?style=for-the-badge&logo=apachemaven&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-JDBC-38b6ff?style=for-the-badge&logo=sqlite&logoColor=white)
+![Jetty](https://img.shields.io/badge/Jetty-9.4-38b6ff?style=for-the-badge)
 
-El proyecto implementa una arquitectura organizada por capas, utilizando Java Servlets para gestionar las solicitudes del usuario, JSP para la presentación de las interfaces y SQLite para el almacenamiento de la información.
+**Evidencia GA7-220501096-AA2-EV02 · Módulos de software codificados y probados**
 
-2. Objetivo del proyecto
+</div>
 
-Desarrollar y probar un módulo de software web para la administración de productos, aplicando los conocimientos adquiridos en el componente formativo de Construcción de Aplicaciones con Java.
+---
 
-3. Tecnologías y herramientas utilizadas
-Lenguaje de programación: Java.
-Entorno de desarrollo: Visual Studio Code.
-Gestor de proyectos: Apache Maven.
-Tecnología web: Java Servlets y JSP.
-Lenguaje de marcado: HTML.
-Base de datos: SQLite.
-Control de versiones: Git.
-Repositorio remoto: GitHub.
-4. Funcionalidades del módulo
+## 📌 Descripción
 
-El módulo de gestión de productos permite:
+**Virtual Store** es una aplicación web desarrollada en Java que permite administrar los productos de una tienda virtual mediante las cuatro operaciones básicas de datos: **crear, consultar, actualizar y eliminar (CRUD)**.
 
-Consultar y visualizar los productos registrados.
-Registrar nuevos productos.
-Editar la información de los productos existentes.
-Eliminar productos.
-Consultar información como identificador, nombre, precio y stock.
-5. Estructura del proyecto
+El módulo está organizado por capas: los **Servlets** reciben y procesan las solicitudes HTTP, los **JSP** presentan las interfaces al usuario, los **DAO** acceden a la base de datos mediante **JDBC** y la información se almacena en **SQLite**.
 
-El proyecto está organizado de la siguiente manera:
+## 🎯 Objetivo
 
-text
+Codificar y probar un módulo de software orientado a la web, aplicando formularios HTML con Servlets, los métodos HTTP **GET** y **POST** y elementos de **JSP**, según lo visto en el componente formativo *Construcción de aplicaciones con Java*.
+
+## ✨ Funcionalidades
+
+| Funcionalidad | Método HTTP | Descripción |
+|---|---|---|
+| Listar productos | `GET` | Muestra la tabla con ID, nombre, precio y stock. |
+| Abrir formulario de nuevo producto | `GET` | Presenta el formulario vacío. |
+| Abrir formulario de edición | `GET` | Carga los datos del producto seleccionado. |
+| Registrar producto | `POST` | Valida y guarda un producto nuevo. |
+| Actualizar producto | `POST` | Guarda los cambios de un producto existente. |
+| Eliminar producto | `POST` | Elimina el producto previa confirmación del usuario. |
+
+## 🧰 Tecnologías
+
+| Componente | Tecnología |
+|---|---|
+| Lenguaje | Java 17 |
+| Aplicación web | Java Servlets (`javax.servlet` 4.0.1) y JSP con JSTL 1.2 |
+| Interfaz | HTML5 y CSS |
+| Base de datos | SQLite con JDBC (`sqlite-jdbc` 3.50.3.0) |
+| Gestor del proyecto | Apache Maven |
+| Servidor de ejecución | Jetty (`jetty-maven-plugin` 9.4.54) |
+| Entorno de desarrollo | Visual Studio Code |
+| Control de versiones | Git y GitHub |
+
+## 🗂️ Estructura del proyecto
+
+```text
 YENNIFERMEJIA_AA2_EV02/
-│
-├── Evidencias/
-│
+├── evidencias/                      # Capturas de pantalla de la evidencia
 ├── src/
 │   └── main/
-│       ├── java/
-│       │   └── com/
-│       │       └── virtualstore/
-│       │           ├── dao/
-│       │           │   └── ProductDAO.java
-│       │           │
-│       │           ├── database/
-│       │           │   ├── DatabaseConnection.java
-│       │           │   └── DatabaseInitializer.java
-│       │           │
-│       │           ├── model/
-│       │           │   └── Product.java
-│       │           │
-│       │           ├── servlet/
-│       │           │   └── ProductServlet.java
-│       │           │
-│       │           ├── CrudDemo.java
-│       │           └── Main.java
-│       │
+│       ├── java/com/virtualstore/
+│       │   ├── dao/
+│       │   │   └── ProductDAO.java          # Operaciones CRUD con JDBC
+│       │   ├── database/
+│       │   │   ├── DatabaseConnection.java  # Conexión a SQLite
+│       │   │   └── DatabaseInitializer.java # Creación de las tablas
+│       │   ├── model/
+│       │   │   └── Product.java             # Entidad Producto
+│       │   ├── servlet/
+│       │   │   └── ProductServlet.java      # doGet() y doPost()
+│       │   ├── CrudDemo.java                # Prueba del CRUD por consola
+│       │   └── Main.java
 │       └── webapp/
-│           ├── index.jsp
-│           ├── product-list.jsp
-│           └── product-form.jsp
-│
+│           ├── index.jsp                    # Página de entrada
+│           ├── product-list.jsp             # Listado de productos
+│           └── product-form.jsp             # Formulario crear / editar
 ├── .gitignore
 ├── enlace_repositorio.txt
 ├── pom.xml
 ├── README.md
-└── tienda_virtual.db
+└── tienda_virtual.db                        # Base de datos SQLite
+```
 
-6. Descripción de los componentes
-Paquete dao
+## 🏗️ Arquitectura
 
-Contiene ProductDAO.java, encargado de gestionar las operaciones de acceso a los datos de los productos.
+```text
+Navegador ──► ProductServlet ──► ProductDAO ──► SQLite
+                  │  (doGet / doPost)   (JDBC)
+                  ▼
+             JSP (vista)
+```
 
-Paquete database
+1. El usuario envía una solicitud desde el navegador (enlace con `GET` o formulario con `POST`).
+2. `ProductServlet` interpreta el parámetro `action` y llama al DAO.
+3. `ProductDAO` ejecuta la consulta con `PreparedStatement` sobre SQLite.
+4. El servlet entrega los datos al JSP correspondiente, o redirige al listado después de un `POST`.
 
-Contiene las clases:
+## 🗄️ Base de datos
 
-DatabaseConnection.java: administra la conexión con la base de datos SQLite.
-DatabaseInitializer.java: permite inicializar la estructura de la base de datos.
-Paquete model
+El archivo `tienda_virtual.db` se crea y se inicializa automáticamente con las tablas `User`, `Product`, `Order` y `Order_items`, según el modelo entidad-relación del proyecto.
 
-Contiene Product.java, que representa la entidad o modelo de los productos.
+Este módulo trabaja con la tabla **`Product`**:
 
-Paquete servlet
+| Columna | Tipo | Descripción |
+|---|---|---|
+| `product_id` | INTEGER (PK, autoincremental) | Identificador del producto |
+| `name` | TEXT | Nombre |
+| `price` | REAL | Precio |
+| `stock` | INTEGER | Unidades disponibles |
 
-Contiene ProductServlet.java, encargado de recibir y procesar las solicitudes del usuario mediante los métodos HTTP correspondientes.
+## 🚀 Cómo ejecutar el proyecto
 
-Páginas webapp
-index.jsp: página principal de la aplicación.
-product-list.jsp: presenta el listado de productos.
-product-form.jsp: contiene el formulario para registrar o editar productos.
-Clases adicionales
-CrudDemo.java: clase de demostración de operaciones CRUD.
-Main.java: clase principal del proyecto.
-7. Base de datos
+**Requisitos:** Java JDK 17 o superior y Apache Maven.
 
-El proyecto utiliza SQLite para almacenar la información de los productos.
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/Yenifer18-4200/YENNIFERMEJIA_AA2_EV02.git
+cd YENNIFERMEJIA_AA2_EV02
 
-El archivo de la base de datos es:
+# 2. Iniciar la aplicación con Jetty
+mvn jetty:run
+```
 
-tienda_virtual.db
+Luego abre en el navegador: **http://localhost:8080**
 
-La información administrada incluye identificador, nombre, precio y stock de los productos.
+Para detener el servidor, pulsa `Ctrl + C` en la terminal.
 
-8. Ejecución del proyecto
+## 🧪 Pruebas realizadas
 
-Para ejecutar el proyecto se requiere:
+| Prueba | Resultado |
+|---|---|
+| Listar los productos registrados | Correcto |
+| Registrar un producto nuevo desde el formulario | Correcto |
+| Editar nombre, precio y stock de un producto | Correcto |
+| Eliminar un producto con confirmación | Correcto |
 
-Tener instalado Java JDK.
-Tener instalado Apache Maven.
-Abrir la carpeta del proyecto en Visual Studio Code.
-Verificar las dependencias configuradas en pom.xml.
-Compilar el proyecto utilizando Maven.
-Ejecutar la aplicación de acuerdo con la configuración del proyecto y acceder desde el navegador.
-9. Control de versiones
+Las capturas de cada prueba están en la carpeta [`evidencias`](evidencias/).
 
-El proyecto utiliza Git para el control de versiones y GitHub como plataforma de alojamiento del repositorio remoto.
+## 🖼️ Capturas
 
-El enlace del repositorio se encuentra en el archivo enlace_repositorio.txt.
+### Listado de productos
+![Listado de productos](evidencias/06_Funcionamiento.png)
 
-10. Evidencias
+### Edición de un producto
+| Datos originales | Datos modificados | Producto actualizado |
+|---|---|---|
+| ![Datos originales](evidencias/07A_Edicion_Datos_Originales.png) | ![Datos modificados](evidencias/07B_Edicion_Datos_Nuevos.png) | ![Producto actualizado](evidencias/07C_Edicion_Producto_Actualizado.png) |
 
-La carpeta Evidencias contiene las capturas de pantalla que documentan:
+## 🔖 Control de versiones
 
-La estructura del proyecto.
-La codificación de los Servlets.
-La implementación de las páginas JSP.
-El funcionamiento de la aplicación web.
-Las pruebas de las funcionalidades del módulo.
-11. Información de la evidencia
+El proyecto se gestiona con **Git** y se aloja en **GitHub**. El enlace del repositorio también se encuentra en el archivo [`enlace_repositorio.txt`](enlace_repositorio.txt).
 
-Aprendiz: Yennifer Mejía.
+## 👩‍💻 Información de la evidencia
 
-Proyecto: Virtual Store.
-
-Evidencia: GA7-220501096-AA2-EV02.
-
-Nombre de la evidencia: Módulos de software codificados y probados.
-
-Programa: Servicio Nacional de Aprendizaje (SENA).
+| | |
+|---|---|
+| **Aprendiz** | Yennifer Mejía Mendez |
+| **Programa** | Tecnólogo en Análisis y Desarrollo de Software |
+| **Ficha** | 3336155 |
+| **Centro** | Centro de Comercio y Servicios · SENA Regional Risaralda |
+| **Evidencia** | GA7-220501096-AA2-EV02 |
+| **Nombre de la evidencia** | Módulos de software codificados y probados |
